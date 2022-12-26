@@ -1,0 +1,132 @@
+and(L1,L2,L3) :- and(L1,L2,[],L3).
+and(_,[],L,L) :- !.
+and(L1,[H|T],L2,L3) :- 
+	member(H, L1), append(L2,[H],L4), and(L1,T,L4,L3).
+and(L1,[H|T],L2,L3) :-
+	not(member(H,L1)),
+	and(L1,T,L2,L3).
+
+or(L1,L2,L3) :- or(L1,L2,L1,L3).
+or(_,[],L,L) :- !.
+or(L1,[H|T],L2,L3) :- 
+	not(member(H, L1)), append(L2,[H],L4), or(L1,T,L4,L3).
+or(L1,[H|T],L2,L3) :-
+	member(H,L1),
+	or(L1,T,L2,L3).
+
+
+process(S) :-
+	S =.. [view|L],
+	processView(L).
+
+
+processView([L]) :-
+	buildImageList(L,R),
+	viewImages(R).
+
+
+buildImageList(L,R) :-
+	L =.. [and|A],
+	buildImageList(A,[],Images),
+	andImageList(Images,R).
+
+buildImageList(L,R) :-
+	L =..[or|A],
+	buildImageList(A,[],Images),
+	orImageList(Images,R).
+
+buildImageList(L,R) :-
+	findImages(L,R).
+
+
+buildImageList([],L,L) :- !.
+
+buildImageList([H|T],I,R) :-
+	H =.. [and|A],
+	buildImageList(A,[],R1),
+	andImageList(R1,Images),
+	append(I,[Images],I2),
+	buildImageList(T,I2,R).
+
+buildImageList([H|T],I,R) :-
+	H =.. [or|A],
+	buildImageList(A,[],R1),
+	orImageList(R1,Images),
+	append(I,[Images],I2),
+	buildImageList(T,I2,R).
+
+buildImageList([H|T],I,R) :-
+	findImages(H,Images),
+	append(I,[Images],I2),
+	buildImageList(T,I2,R).
+
+
+orImageList(L,R) :- 
+	orImageList(L,[],R).
+
+orImageList([],L,L) :- !.
+
+orImageList([H|T],I,R) :-
+	or(H,I,R1),
+	orImageList(T,R1,R).
+
+
+andImageList(L,R) :- 
+	head(L,H),
+	andImageList(L,H,R).
+
+andImageList([],L,L) :- !.
+
+andImageList([H|T],I,R) :-
+	and(H,I,R1),
+	andImageList(T,R1,R).
+
+findImages(L,R) :-
+	findImages(L,[],R).
+
+findImages([],L,L) :- !.
+
+findImages([H|T],R1,R) :-
+	H =.. [Name,Value],
+	F =.. [Name,I,Value],
+	findall(I,F,L),
+	append(R1,L,R2),
+	findImages(T,R2,R).
+
+findImages(H,R1,R) :-
+	H =.. [Name,Value],
+	F =.. [Name,I,Value],
+	findall(I,F,L),
+	append(R1,L,R).
+
+viewImages([]) :- !.
+
+viewImages([H|T]) :-
+	write(H),
+	nl,
+	viewImages(T).
+
+house(image792,large).
+color(image792,beige).
+bedrooms(image792,4).
+bathrooms(image792,3).
+type(image792,colonial).
+
+house(image334,small).
+color(image334,white).
+bedrooms(image334,3).
+bathrooms(image334,2).
+type(image792,colonial).
+
+house(image412,large).
+color(image412,white).
+bedrooms(image412,3).
+bathrooms(image412,2).
+type(image412,modern).
+
+house(image257,large).
+color(image257,beige).
+bedrooms(image257,5).
+bathrooms(image257,3).
+type(image257,modern).
+

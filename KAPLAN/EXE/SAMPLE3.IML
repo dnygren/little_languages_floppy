@@ -1,0 +1,14 @@
+add tree1.img name pinetree index [n,"pine"],[has,"needles"],[height,7.3];
+add tree2.img name oaktree index [n,"oak"],[has,"leaves"],[height,12.2];
+add struct.img name house1 index [type,"colonial"],[size,"4 25"];
+remove size(2) and size(3) and size(4);
+view size(5) and n("oak") or n("pine");
+a = getimage(tree1);
+b = getimage(tree2);
+c = moveimage(tree1,120,400);
+d = moveimage(tree2,400,120);
+e = a+b;
+save e scene1.img;
+end;
+
+

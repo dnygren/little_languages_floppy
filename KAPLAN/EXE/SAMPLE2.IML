@@ -1,0 +1,30 @@
+add usa.img name us index [type,map]
+add dallas.img name dallas index [city,dallas],[locale,sw]
+add dallas.img name dallas index [content,buildings],[type,graphic]
+add sf.img name sanfrancisco index [city,sanfrancisco]
+add sf.img name sanfrancisco index [locale,w],[content,bridge]
+add sf.img name sanfrancisco index [content,grapes],[content,cablecar]
+add sf.img name sanfrancisco index [type,graphic]
+add boston.img name boston index [city,boston],[locale,e],[content,horse]
+add boston.img name boston index [content,lobster],[content,fish]
+add boston.img name boston index [type,graphic]
+add chicago.img name chicago index [city,chicago],[locale,mw]
+add chicago.img name chicago index [content,buildings],[content,water]
+add chicago.img name chicago index [content,boat],[type,graphic]
+read usa.img i1
+i1 = enlarge(i1,400.0)
+read dallas.img i2
+i2 = reduce(i2,0.25)
+read sf.img i3
+i3 = reduce(i3,0.25)
+read boston.img i4
+i4 = reduce(i4,0.25)
+read chicago.img i5
+i5 = reduce(i5,0.25)
+final = i1 + position(i2,280,300) + position(i3,25,180) + position(i4,100,520) + position(i5,450,170)
+save final uscitys.img
+add uscitys.img name uscitys index [type,map],[city,sanfrancisco]
+add uscitys.img name uscitys index [city,chicago],[city,dallas],[city,boston]
+end
+
+

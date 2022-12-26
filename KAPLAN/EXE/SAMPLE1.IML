@@ -1,0 +1,24 @@
+add a.img name b index [c,1]
+add a.img name c index [d,1]
+add a.img name d index [n,"this is a test"]
+add d.img name e index [f,1],[g,"test"]
+add h.img name f index [j,1.15],[k,3],[l,"a string"]
+add i1.img name image1 index [image,boy],[image,girl],[age,5]
+add i2.img name image2 index [image,boy],[age,5]
+add i3.img name image3 index [image,girl],[age,5]
+add i4.img name image4 index [image,boy],[image,girl],[age,5]
+add i5.img name image5 index [image,boy],[image,girl],[age,2]
+add i6.img name image6 index [color,red],[size,large]
+add i7.img name image7 index [color,blue],[size,large]
+add i8.img name image8 index [color,blue],[size,medium]
+add i9.img name image9 index [color,blue],[size,small]
+add i10.img name image10 index [color,red],[size,large]
+read ifile.img iv1
+save iv1 ifile.img
+view age(5) and (image(boy) and image(girl))
+remove color(blue) and (size(large) or size(medium))
+remove type(alpha) and type(beta)
+view color(red)
+a = b + reduce(q,10.0) + c + d - (e + f)
+end
+
